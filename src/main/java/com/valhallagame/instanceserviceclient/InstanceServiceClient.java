@@ -5,8 +5,11 @@ import java.io.IOException;
 import com.valhallagame.common.DefaultServicePortMappings;
 import com.valhallagame.common.RestCaller;
 import com.valhallagame.common.RestResponse;
-import com.valhallagame.instanceserviceclient.message.Instance;
+import com.valhallagame.instanceserviceclient.message.SessionAndConnection;
+import com.valhallagame.instanceserviceclient.message.StartDungonParameter;
+import com.valhallagame.instanceserviceclient.message.StopDungonParameter;
 import com.valhallagame.instanceserviceclient.message.UsernameAndVersionParameter;
+
 
 public class InstanceServiceClient {
 	
@@ -18,9 +21,10 @@ public class InstanceServiceClient {
 
 	private InstanceServiceClient() {
 	}
-
+	
 	public static void init(String instanceServiceServerUrl) {
 		InstanceServiceClient client = get();
+		
 		client.instanceServiceServerUrl = instanceServiceServerUrl;
 	}
 
@@ -31,8 +35,18 @@ public class InstanceServiceClient {
 		return instanceServiceClient;
 	}
 
-	public RestResponse<Instance> getSelectedInstance(String username, String clientVersion) throws IOException {
+	public RestResponse<SessionAndConnection> getGameSession(String username, String clientVersion) throws IOException {
 		UsernameAndVersionParameter usernameParam = new UsernameAndVersionParameter(username, clientVersion);
-		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-selected-instance", usernameParam, Instance.class);
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-game-session", usernameParam, SessionAndConnection.class);
+	}
+
+	public RestResponse<String> startDungeon(String username, String map, String version) throws IOException {
+		StartDungonParameter sdp = new StartDungonParameter(username, map, version);
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/start-dungeon", sdp, String.class);
+	}
+	
+	public RestResponse<String> stopDungeon(String username, int dungeonId) throws IOException {
+		StopDungonParameter sdp = new StopDungonParameter(username, dungeonId);
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/stop-dungeon", sdp, String.class);
 	}
 }
