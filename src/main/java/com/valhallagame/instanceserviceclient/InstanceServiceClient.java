@@ -17,7 +17,7 @@ public class InstanceServiceClient {
 	
 	private static InstanceServiceClient instanceServiceClient;
 
-	private String instanceServiceServerUrl = "http://localhost:" + DefaultServicePortMappings.CHARACTER_SERVICE_PORT;
+	private String instanceServiceServerUrl = "http://localhost:" + DefaultServicePortMappings.INSTANCE_SERVICE_PORT;
 
 	private InstanceServiceClient() {
 	}
@@ -35,9 +35,9 @@ public class InstanceServiceClient {
 		return instanceServiceClient;
 	}
 
-	public RestResponse<SessionAndConnection> getGameSession(String username, String clientVersion) throws IOException {
+	public RestResponse<SessionAndConnection> getPlayerSession(String username, String clientVersion) throws IOException {
 		UsernameAndVersionParameter usernameParam = new UsernameAndVersionParameter(username, clientVersion);
-		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-game-session", usernameParam, SessionAndConnection.class);
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-player-session", usernameParam, SessionAndConnection.class);
 	}
 
 	public RestResponse<String> startDungeon(String username, String map, String version) throws IOException {
