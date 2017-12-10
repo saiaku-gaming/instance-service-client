@@ -5,26 +5,24 @@ import java.io.IOException;
 import com.valhallagame.common.DefaultServicePortMappings;
 import com.valhallagame.common.RestCaller;
 import com.valhallagame.common.RestResponse;
+import com.valhallagame.instanceserviceclient.message.ActivateInstanceParameter;
+import com.valhallagame.instanceserviceclient.message.GetPlayerSessionAndConnectionParameter;
 import com.valhallagame.instanceserviceclient.message.SessionAndConnection;
-import com.valhallagame.instanceserviceclient.message.StartDungonParameter;
-import com.valhallagame.instanceserviceclient.message.StopDungonParameter;
-import com.valhallagame.instanceserviceclient.message.UsernameAndVersionParameter;
-
 
 public class InstanceServiceClient {
-	
+
 	private static RestCaller restCaller = new RestCaller();
-	
+
 	private static InstanceServiceClient instanceServiceClient;
 
 	private String instanceServiceServerUrl = "http://localhost:" + DefaultServicePortMappings.INSTANCE_SERVICE_PORT;
 
 	private InstanceServiceClient() {
 	}
-	
+
 	public static void init(String instanceServiceServerUrl) {
 		InstanceServiceClient client = get();
-		
+
 		client.instanceServiceServerUrl = instanceServiceServerUrl;
 	}
 
@@ -35,18 +33,16 @@ public class InstanceServiceClient {
 		return instanceServiceClient;
 	}
 
-	public RestResponse<SessionAndConnection> getPlayerSession(String username, String clientVersion) throws IOException {
-		UsernameAndVersionParameter usernameParam = new UsernameAndVersionParameter(username, clientVersion);
-		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-player-session", usernameParam, SessionAndConnection.class);
+	public RestResponse<SessionAndConnection> getPlayerSessionAndConnection(String username, String clientVersion)
+			throws IOException {
+		GetPlayerSessionAndConnectionParameter usernameParam = new GetPlayerSessionAndConnectionParameter(username,
+				clientVersion);
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-player-session-and-connection",
+				usernameParam, SessionAndConnection.class);
 	}
 
-	public RestResponse<String> startDungeon(String username, String map, String version) throws IOException {
-		StartDungonParameter sdp = new StartDungonParameter(username, map, version);
-		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/start-dungeon", sdp, String.class);
-	}
-	
-	public RestResponse<String> stopDungeon(String username, int dungeonId) throws IOException {
-		StopDungonParameter sdp = new StopDungonParameter(username, dungeonId);
-		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/stop-dungeon", sdp, String.class);
+	public RestResponse<String> activateInstance(String gameSessionId, String address, int port) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/stop-dungeon",
+				new ActivateInstanceParameter(gameSessionId, address, port), String.class);
 	}
 }
