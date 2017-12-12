@@ -42,7 +42,7 @@ public class InstanceServiceClient {
 	}
 
 	public RestResponse<String> activateInstance(String gameSessionId, String address, int port) throws IOException {
-		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/stop-dungeon",
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/activate-instance",
 				new ActivateInstanceParameter(gameSessionId, address, port), String.class);
 	}
 }
