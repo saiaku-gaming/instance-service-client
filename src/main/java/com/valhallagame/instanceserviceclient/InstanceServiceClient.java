@@ -9,6 +9,7 @@ import com.valhallagame.instanceserviceclient.message.ActivateInstanceParameter;
 import com.valhallagame.instanceserviceclient.message.DeactivateInstanceParameter;
 import com.valhallagame.instanceserviceclient.message.GetPlayerSessionAndConnectionParameter;
 import com.valhallagame.instanceserviceclient.message.SessionAndConnection;
+import com.valhallagame.instanceserviceclient.message.StartDungeonParameter;
 
 public class InstanceServiceClient {
 
@@ -50,5 +51,10 @@ public class InstanceServiceClient {
 	public RestResponse<String> deactivateInstance(String gameSessionId) throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/deactivate-instance",
 				new DeactivateInstanceParameter(gameSessionId), String.class);
+	}
+
+	public RestResponse<String> startDungeon(String username, String map, String version) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/start-dungeon",
+				new StartDungeonParameter(username, map, version), String.class);
 	}
 }

@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class StopDungonParameter {
-	String username;
-	int dungeonId;
+public class StartDungeonParameter {
+	private String username;
+	private String map;
+	private String version;
 }
