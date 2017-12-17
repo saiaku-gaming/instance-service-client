@@ -32,6 +32,7 @@ public class InstanceServiceClient {
 		if (instanceServiceClient == null) {
 			instanceServiceClient = new InstanceServiceClient();
 		}
+
 		return instanceServiceClient;
 	}
 
