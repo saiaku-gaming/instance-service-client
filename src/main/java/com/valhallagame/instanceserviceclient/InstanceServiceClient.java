@@ -8,6 +8,7 @@ import com.valhallagame.common.DefaultServicePortMappings;
 import com.valhallagame.common.RestCaller;
 import com.valhallagame.common.RestResponse;
 import com.valhallagame.instanceserviceclient.message.ActivateInstanceParameter;
+import com.valhallagame.instanceserviceclient.message.GetDungeonConnectionParameter;
 import com.valhallagame.instanceserviceclient.message.GetHubParameter;
 import com.valhallagame.instanceserviceclient.message.GetRelevantDungeonsParameter;
 import com.valhallagame.instanceserviceclient.message.SessionAndConnection;
@@ -64,5 +65,10 @@ public class InstanceServiceClient {
 	public RestResponse<String> startDungeon(String username, String map, String version) throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/start-dungeon",
 				new StartDungeonParameter(username, map, version), String.class);
+	}
+	
+	public RestResponse<SessionAndConnection> getDungeonConnection(String username, String gameSessionId, String version) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-dungeon-connection",
+				new GetDungeonConnectionParameter(username, gameSessionId, version), SessionAndConnection.class);
 	}
 }
