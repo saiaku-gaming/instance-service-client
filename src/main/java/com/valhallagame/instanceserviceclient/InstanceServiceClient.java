@@ -8,6 +8,7 @@ import com.valhallagame.common.DefaultServicePortMappings;
 import com.valhallagame.common.RestCaller;
 import com.valhallagame.common.RestResponse;
 import com.valhallagame.instanceserviceclient.message.ActivateInstanceParameter;
+import com.valhallagame.instanceserviceclient.message.GetDungeonConnectionParameter;
 import com.valhallagame.instanceserviceclient.message.GetHubParameter;
 import com.valhallagame.instanceserviceclient.message.GetRelevantDungeonsParameter;
 import com.valhallagame.instanceserviceclient.message.InstancePlayerLoginParameter;
@@ -42,7 +43,7 @@ public class InstanceServiceClient {
 	}
 
 	public RestResponse<SessionAndConnection> getHub(String username, String clientVersion) throws IOException {
-		GetHubParameter getHubParameter = new GetHubParameter();
+		GetHubParameter getHubParameter = new GetHubParameter(username, clientVersion);
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-hub", getHubParameter,
 				SessionAndConnection.class);
 	}
@@ -76,5 +77,11 @@ public class InstanceServiceClient {
 	public RestResponse<String> instancePlayerLogout(String username, String gameSessionId) throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/instance-player-logout",
 				new InstancePlayerLogoutParameter(username, gameSessionId), String.class);
+	}
+
+	public RestResponse<SessionAndConnection> getDungeonConnection(String username, String gameSessionId,
+			String version) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-dungeon-connection",
+				new GetDungeonConnectionParameter(username, gameSessionId, version), SessionAndConnection.class);
 	}
 }
