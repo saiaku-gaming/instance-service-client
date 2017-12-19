@@ -40,7 +40,7 @@ public class InstanceServiceClient {
 	}
 
 	public RestResponse<SessionAndConnection> getHub(String username, String clientVersion) throws IOException {
-		GetHubParameter getHubParameter = new GetHubParameter();
+		GetHubParameter getHubParameter = new GetHubParameter(username, clientVersion);
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-hub", getHubParameter,
 				SessionAndConnection.class);
 	}
