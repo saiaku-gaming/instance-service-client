@@ -10,6 +10,8 @@ import com.valhallagame.common.RestResponse;
 import com.valhallagame.instanceserviceclient.message.ActivateInstanceParameter;
 import com.valhallagame.instanceserviceclient.message.GetHubParameter;
 import com.valhallagame.instanceserviceclient.message.GetRelevantDungeonsParameter;
+import com.valhallagame.instanceserviceclient.message.InstancePlayerLoginParameter;
+import com.valhallagame.instanceserviceclient.message.InstancePlayerLogoutParameter;
 import com.valhallagame.instanceserviceclient.message.SessionAndConnection;
 import com.valhallagame.instanceserviceclient.message.StartDungeonParameter;
 import com.valhallagame.instanceserviceclient.message.UpdateInstanceStateParameter;
@@ -64,5 +66,15 @@ public class InstanceServiceClient {
 	public RestResponse<String> startDungeon(String username, String map, String version) throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/start-dungeon",
 				new StartDungeonParameter(username, map, version), String.class);
+	}
+
+	public RestResponse<String> instancePlayerLogin(String username, String gameSessionId) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/instance-player-login",
+				new InstancePlayerLoginParameter(username, gameSessionId), String.class);
+	}
+
+	public RestResponse<String> instancePlayerLogout(String username, String gameSessionId) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/instance-player-logout",
+				new InstancePlayerLogoutParameter(username, gameSessionId), String.class);
 	}
 }
