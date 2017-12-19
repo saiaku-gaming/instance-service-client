@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetPlayerSessionAndConnectionParameter {
+public class GetRelevantDungeonsParameter {
 	private String username;
 	private String version;
 }

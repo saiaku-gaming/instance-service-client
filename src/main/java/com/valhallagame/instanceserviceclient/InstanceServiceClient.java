@@ -1,15 +1,18 @@
 package com.valhallagame.instanceserviceclient;
 
 import java.io.IOException;
+import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.valhallagame.common.DefaultServicePortMappings;
 import com.valhallagame.common.RestCaller;
 import com.valhallagame.common.RestResponse;
 import com.valhallagame.instanceserviceclient.message.ActivateInstanceParameter;
-import com.valhallagame.instanceserviceclient.message.DeactivateInstanceParameter;
-import com.valhallagame.instanceserviceclient.message.GetPlayerSessionAndConnectionParameter;
+import com.valhallagame.instanceserviceclient.message.GetHubParameter;
+import com.valhallagame.instanceserviceclient.message.GetRelevantDungeonsParameter;
 import com.valhallagame.instanceserviceclient.message.SessionAndConnection;
 import com.valhallagame.instanceserviceclient.message.StartDungeonParameter;
+import com.valhallagame.instanceserviceclient.message.UpdateInstanceStateParameter;
 
 public class InstanceServiceClient {
 
@@ -36,12 +39,16 @@ public class InstanceServiceClient {
 		return instanceServiceClient;
 	}
 
-	public RestResponse<SessionAndConnection> getPlayerSessionAndConnection(String username, String clientVersion)
-			throws IOException {
-		GetPlayerSessionAndConnectionParameter usernameParam = new GetPlayerSessionAndConnectionParameter(username,
-				clientVersion);
-		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-player-session-and-connection",
-				usernameParam, SessionAndConnection.class);
+	public RestResponse<SessionAndConnection> getHub(String username, String clientVersion) throws IOException {
+		GetHubParameter getHubParameter = new GetHubParameter();
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-hub", getHubParameter,
+				SessionAndConnection.class);
+	}
+
+	public RestResponse<List<String>> getRelevantDungeons(String username, String clientVersion) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-relevant-dungeons",
+				new GetRelevantDungeonsParameter(username, clientVersion), new TypeReference<List<String>>() {
+				});
 	}
 
 	public RestResponse<String> activateInstance(String gameSessionId, String address, int port) throws IOException {
@@ -49,9 +56,9 @@ public class InstanceServiceClient {
 				new ActivateInstanceParameter(gameSessionId, address, port), String.class);
 	}
 
-	public RestResponse<String> deactivateInstance(String gameSessionId) throws IOException {
-		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/deactivate-instance",
-				new DeactivateInstanceParameter(gameSessionId), String.class);
+	public RestResponse<String> updateInstanceState(String gameSessionId, String state) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/update-instance-state",
+				new UpdateInstanceStateParameter(gameSessionId, state), String.class);
 	}
 
 	public RestResponse<String> startDungeon(String username, String map, String version) throws IOException {
