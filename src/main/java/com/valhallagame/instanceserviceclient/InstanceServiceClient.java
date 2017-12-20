@@ -8,6 +8,7 @@ import com.valhallagame.common.DefaultServicePortMappings;
 import com.valhallagame.common.RestCaller;
 import com.valhallagame.common.RestResponse;
 import com.valhallagame.instanceserviceclient.message.ActivateInstanceParameter;
+import com.valhallagame.instanceserviceclient.message.GetAllPlayersInSameInstanceParameter;
 import com.valhallagame.instanceserviceclient.message.GetDungeonConnectionParameter;
 import com.valhallagame.instanceserviceclient.message.GetHubParameter;
 import com.valhallagame.instanceserviceclient.message.GetRelevantDungeonsParameter;
@@ -83,5 +84,10 @@ public class InstanceServiceClient {
 			String version) throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-dungeon-connection",
 				new GetDungeonConnectionParameter(username, gameSessionId, version), SessionAndConnection.class);
+	}
+
+	public RestResponse<List<String>> getAllPlayersInSameInstance(String senderUsername) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-all-players-in-same-instance",
+				new GetAllPlayersInSameInstanceParameter(senderUsername), new TypeReference<List<String>>() {});
 	}
 }
