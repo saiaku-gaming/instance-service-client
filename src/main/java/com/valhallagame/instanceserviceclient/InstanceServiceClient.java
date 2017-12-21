@@ -8,9 +8,11 @@ import com.valhallagame.common.DefaultServicePortMappings;
 import com.valhallagame.common.RestCaller;
 import com.valhallagame.common.RestResponse;
 import com.valhallagame.instanceserviceclient.message.ActivateInstanceParameter;
+import com.valhallagame.instanceserviceclient.message.AddLocalInstanceParameter;
 import com.valhallagame.instanceserviceclient.message.GetDungeonConnectionParameter;
 import com.valhallagame.instanceserviceclient.message.GetHubParameter;
 import com.valhallagame.instanceserviceclient.message.GetRelevantDungeonsParameter;
+import com.valhallagame.instanceserviceclient.message.Instance;
 import com.valhallagame.instanceserviceclient.message.InstancePlayerLoginParameter;
 import com.valhallagame.instanceserviceclient.message.InstancePlayerLogoutParameter;
 import com.valhallagame.instanceserviceclient.message.SessionAndConnection;
@@ -69,9 +71,9 @@ public class InstanceServiceClient {
 				new StartDungeonParameter(username, map, version), String.class);
 	}
 
-	public RestResponse<String> instancePlayerLogin(String username, String gameSessionId) throws IOException {
+	public RestResponse<String> instancePlayerLogin(String token, String gameSessionId) throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/instance-player-login",
-				new InstancePlayerLoginParameter(username, gameSessionId), String.class);
+				new InstancePlayerLoginParameter(token, gameSessionId), String.class);
 	}
 
 	public RestResponse<String> instancePlayerLogout(String username, String gameSessionId) throws IOException {
@@ -83,5 +85,15 @@ public class InstanceServiceClient {
 			String version) throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-dungeon-connection",
 				new GetDungeonConnectionParameter(username, gameSessionId, version), SessionAndConnection.class);
+	}
+
+	public RestResponse<List<Instance>> getAllInstances() throws IOException {
+		return restCaller.getCall(instanceServiceServerUrl + "/v1/instance/get-all-instances",
+				new TypeReference<List<Instance>>() {
+				});
+	}
+
+	public RestResponse<String> addLocalInstance(AddLocalInstanceParameter input) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/add-local-instance", input, String.class);
 	}
 }
