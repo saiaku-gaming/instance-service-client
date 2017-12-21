@@ -9,6 +9,7 @@ import com.valhallagame.common.RestCaller;
 import com.valhallagame.common.RestResponse;
 import com.valhallagame.instanceserviceclient.message.ActivateInstanceParameter;
 import com.valhallagame.instanceserviceclient.message.AddLocalInstanceParameter;
+import com.valhallagame.instanceserviceclient.message.GetAllPlayersInSameInstanceParameter;
 import com.valhallagame.instanceserviceclient.message.GetDungeonConnectionParameter;
 import com.valhallagame.instanceserviceclient.message.GetHubParameter;
 import com.valhallagame.instanceserviceclient.message.GetRelevantDungeonsParameter;
@@ -95,5 +96,11 @@ public class InstanceServiceClient {
 
 	public RestResponse<String> addLocalInstance(AddLocalInstanceParameter input) throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/add-local-instance", input, String.class);
+	}
+
+	public RestResponse<List<String>> getAllPlayersInSameInstance(String senderUsername) throws IOException {
+		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-all-players-in-same-instance",
+				new GetAllPlayersInSameInstanceParameter(senderUsername), new TypeReference<List<String>>() {
+				});
 	}
 }
