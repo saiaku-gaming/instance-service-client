@@ -13,12 +13,12 @@ import com.valhallagame.instanceserviceclient.message.GetAllPlayersInSameInstanc
 import com.valhallagame.instanceserviceclient.message.GetDungeonConnectionParameter;
 import com.valhallagame.instanceserviceclient.message.GetHubParameter;
 import com.valhallagame.instanceserviceclient.message.GetRelevantDungeonsParameter;
-import com.valhallagame.instanceserviceclient.message.Instance;
 import com.valhallagame.instanceserviceclient.message.InstancePlayerLoginParameter;
 import com.valhallagame.instanceserviceclient.message.InstancePlayerLogoutParameter;
-import com.valhallagame.instanceserviceclient.message.SessionAndConnection;
 import com.valhallagame.instanceserviceclient.message.StartDungeonParameter;
 import com.valhallagame.instanceserviceclient.message.UpdateInstanceStateParameter;
+import com.valhallagame.instanceserviceclient.model.InstanceData;
+import com.valhallagame.instanceserviceclient.model.SessionAndConnectionData;
 
 public class InstanceServiceClient {
 
@@ -45,10 +45,10 @@ public class InstanceServiceClient {
 		return instanceServiceClient;
 	}
 
-	public RestResponse<SessionAndConnection> getHub(String username, String clientVersion) throws IOException {
+	public RestResponse<SessionAndConnectionData> getHub(String username, String clientVersion) throws IOException {
 		GetHubParameter getHubParameter = new GetHubParameter(username, clientVersion);
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-hub", getHubParameter,
-				SessionAndConnection.class);
+				SessionAndConnectionData.class);
 	}
 
 	public RestResponse<List<String>> getRelevantDungeons(String username, String clientVersion) throws IOException {
@@ -82,15 +82,15 @@ public class InstanceServiceClient {
 				new InstancePlayerLogoutParameter(username, gameSessionId), String.class);
 	}
 
-	public RestResponse<SessionAndConnection> getDungeonConnection(String username, String gameSessionId,
+	public RestResponse<SessionAndConnectionData> getDungeonConnection(String username, String gameSessionId,
 			String version) throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-dungeon-connection",
-				new GetDungeonConnectionParameter(username, gameSessionId, version), SessionAndConnection.class);
+				new GetDungeonConnectionParameter(username, gameSessionId, version), SessionAndConnectionData.class);
 	}
 
-	public RestResponse<List<Instance>> getAllInstances() throws IOException {
+	public RestResponse<List<InstanceData>> getAllInstances() throws IOException {
 		return restCaller.getCall(instanceServiceServerUrl + "/v1/instance/get-all-instances",
-				new TypeReference<List<Instance>>() {
+				new TypeReference<List<InstanceData>>() {
 				});
 	}
 

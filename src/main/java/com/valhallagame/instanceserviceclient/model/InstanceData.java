@@ -1,4 +1,4 @@
-package com.valhallagame.instanceserviceclient.message;
+package com.valhallagame.instanceserviceclient.model;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Instance {
+public class InstanceData {
 	private String id;
 	private String version;
 	private String level;
