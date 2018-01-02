@@ -17,6 +17,7 @@ import com.valhallagame.instanceserviceclient.message.InstancePlayerLoginParamet
 import com.valhallagame.instanceserviceclient.message.InstancePlayerLogoutParameter;
 import com.valhallagame.instanceserviceclient.message.StartDungeonParameter;
 import com.valhallagame.instanceserviceclient.message.UpdateInstanceStateParameter;
+import com.valhallagame.instanceserviceclient.model.DungeonData;
 import com.valhallagame.instanceserviceclient.model.InstanceData;
 import com.valhallagame.instanceserviceclient.model.SessionAndConnectionData;
 
@@ -51,9 +52,10 @@ public class InstanceServiceClient {
 				SessionAndConnectionData.class);
 	}
 
-	public RestResponse<List<String>> getRelevantDungeons(String username, String clientVersion) throws IOException {
+	public RestResponse<List<DungeonData>> getRelevantDungeons(String username, String clientVersion)
+			throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-relevant-dungeons",
-				new GetRelevantDungeonsParameter(username, clientVersion), new TypeReference<List<String>>() {
+				new GetRelevantDungeonsParameter(username, clientVersion), new TypeReference<List<DungeonData>>() {
 				});
 	}
 
