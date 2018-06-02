@@ -17,6 +17,7 @@ import com.valhallagame.instanceserviceclient.message.InstancePlayerLoginParamet
 import com.valhallagame.instanceserviceclient.message.InstancePlayerLogoutParameter;
 import com.valhallagame.instanceserviceclient.message.StartDungeonParameter;
 import com.valhallagame.instanceserviceclient.message.UpdateInstanceStateParameter;
+import com.valhallagame.instanceserviceclient.model.FleetData;
 import com.valhallagame.instanceserviceclient.model.InstanceData;
 import com.valhallagame.instanceserviceclient.model.RelevantDungeonData;
 import com.valhallagame.instanceserviceclient.model.SessionAndConnectionData;
@@ -102,6 +103,11 @@ public class InstanceServiceClient {
 	public RestResponse<List<String>> getAllPlayersInSameInstance(String senderUsername) throws IOException {
 		return restCaller.postCall(instanceServiceServerUrl + "/v1/instance/get-all-players-in-same-instance",
 				new GetAllPlayersInSameInstanceParameter(senderUsername), new TypeReference<List<String>>() {
+				});
+	}
+	
+	public RestResponse<List<FleetData>> getFleets() throws IOException {
+		return restCaller.getCall(instanceServiceServerUrl + "/v1/instance/get-fleets", new TypeReference<List<FleetData>>() {
 				});
 	}
 }
