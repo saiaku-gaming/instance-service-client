@@ -96,4 +96,8 @@ public class InstanceServiceClient extends AbstractServiceClient {
 		return restCaller.getCall(serviceServerUrl + "/v1/instance/get-fleets", new TypeReference<List<FleetData>>() {
 				});
 	}
+
+	public RestResponse<String> latestVersion(LatestVersionParameter input) throws IOException {
+		return restCaller.postCall(serviceServerUrl + "/v1/instance/latest-version", input, String.class);
+	}
 }

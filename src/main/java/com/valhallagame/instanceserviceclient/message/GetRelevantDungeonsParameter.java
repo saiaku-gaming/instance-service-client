@@ -2,6 +2,8 @@ package com.valhallagame.instanceserviceclient.message;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.valhallagame.common.validation.CheckLowercase;
 
 import lombok.AllArgsConstructor;
@@ -12,10 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetRelevantDungeonsParameter {
-	@NotNull
+	@NotBlank
 	@CheckLowercase
 	private String username;
 
-	@NotNull
+	@NotBlank
 	private String version;
 }

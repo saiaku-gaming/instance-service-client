@@ -2,6 +2,8 @@ package com.valhallagame.instanceserviceclient.message;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InstancePlayerLoginParameter {
-	@NotNull
+	@NotBlank
 	private String token;
 	
-	@NotNull
+	@NotBlank
 	private String gameSessionId;
 }
