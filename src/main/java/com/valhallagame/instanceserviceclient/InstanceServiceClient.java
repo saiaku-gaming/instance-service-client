@@ -70,10 +70,10 @@ public class InstanceServiceClient extends AbstractServiceClient {
 				new InstancePlayerLogoutParameter(username, gameSessionId), String.class);
 	}
 
-	public RestResponse<SessionAndConnectionData> getDungeonConnection(String username, String gameSessionId,
-			String version) throws IOException {
+	public RestResponse<SessionAndConnectionData> getDungeonConnection(String username, String instanceId,
+																	   String version) throws IOException {
 		return restCaller.postCall(serviceServerUrl + "/v1/instance/get-dungeon-connection",
-				new GetDungeonConnectionParameter(username, gameSessionId, version), SessionAndConnectionData.class);
+				new GetDungeonConnectionParameter(username, instanceId, version), SessionAndConnectionData.class);
 	}
 
 	public RestResponse<List<InstanceData>> getAllInstances() throws IOException {
