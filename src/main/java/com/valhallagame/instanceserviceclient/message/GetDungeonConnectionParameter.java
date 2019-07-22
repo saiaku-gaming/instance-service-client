@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,9 +14,9 @@ public class GetDungeonConnectionParameter {
 	@CheckLowercase
 	private String username;
 
-	@NotNull
+    @NotBlank
 	private String instanceId;
 
-	@NotNull
+    @NotBlank
 	private String version;
 }
